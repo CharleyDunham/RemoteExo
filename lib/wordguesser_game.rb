@@ -29,6 +29,17 @@ class WordGuesserGame
     true
   end
 
+  def word_with_guesses
+    displayed_word = ''
+    @word.chars.each do |char|
+      if @guesses.downcase.include?(char.downcase)
+        displayed_word << char
+      else
+        displayed_word << '-'
+      end
+    end
+    displayed_word
+  end
 
 
   # You can test it by installing irb via $ gem install irb
