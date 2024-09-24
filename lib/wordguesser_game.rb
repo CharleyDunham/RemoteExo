@@ -57,7 +57,7 @@ class WordGuesserGame
   # and then running $ irb -I. -r app.rb
   # And then in the irb: irb(main):001:0> WordGuesserGame.get_random_word
   #  => "cooking"   <-- some random word
-  def self.get_ransdom_word
+  def self.get_random_word
     require 'uri'
     require 'net/http'
     uri = URI('http://randomword.saasbook.info/RandomWord')
