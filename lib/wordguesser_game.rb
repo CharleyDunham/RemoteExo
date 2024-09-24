@@ -42,13 +42,9 @@ class WordGuesserGame
   end
 
   def check_win_or_lose
-    if (@word.chars - @guesses.chars).empty?
-      return :win
-    end
+    return :win if (@word.chars - @guesses.chars).empty?
 
-    if @wrong_guesses.length >= 7
-      return :lose
-    end
+    return :lose if @wrong_guesses.length >= 7
 
     :play
   end
