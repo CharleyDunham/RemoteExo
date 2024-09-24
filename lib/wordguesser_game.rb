@@ -41,6 +41,17 @@ class WordGuesserGame
     displayed_word
   end
 
+  def check_win_or_lose
+    if (@word.chars - @guesses.chars).empty?
+      return :win
+    end
+
+    if @wrong_guesses.length >= 7
+      return :lose
+    end
+
+    :play
+  end
 
   # You can test it by installing irb via $ gem install irb
   # and then running $ irb -I. -r app.rb
