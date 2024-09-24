@@ -15,8 +15,11 @@ class WordGuesserGame
   def guess(letter)
     raise ArgumentError if letter.nil? || letter.empty? || !letter.match?(/[a-zA-Z]/)
 
+    letter.downcase!
+    @word.downcase
+
     # checks for letters that are already guessed
-    return true if @guesses.include?(letter) || @wrong_guesses.include?(letter)
+    return false if @guesses.include?(letter) || @wrong_guesses.include?(letter)
 
     # adds the letter to the guesses if it is in the word
     @guesses += letter if @word.include?(letter)
