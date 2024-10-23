@@ -1,27 +1,33 @@
 <% if flash[:message] %>
-   <div class="alert alert-danger">
-     <span class="error"><%= flash[:message] %></span>
-   </div>
+  <div class="alert alert-danger">
+    <span class="error"><%= flash[:message] %></span>
+  </div>
 <% end %>
 
-<div class="alert alert-warning">
-  <p class="lead">
-    Wrong Guesses:
-    <span class="guesses"><%= @game.wrong_guesses %></span>
+<% if @session %>
+  <div class="alert alert-info">
+    <p class="lead">
+      Session Progress:
+      <span class="progress"><%= @session.progress %></span>
+    </p>
+  </div>
+
+  <p class="alert alert-success">
+    Current Exercise:
+    <span class="exercise"><%= @session.current_exercise %></span>
   </p>
-</div>
+<% else %>
+  <div class="alert alert-warning">
+    <p class="lead">No session data available at the moment.</p>
+  </div>
+<% end %>
 
-<p class="alert alert-success">
-  Word so far:
-  <span class="word"><%= @game.word_with_guesses %></span>
-</p>
-
-<form action="/guess" method="post">
+<form action="/log_exercise" method="post">
   <div class="form-group row">
-    <label for="guess" class="col-md-2 col-form-label">Guess a letter:</label>
-    <input type="text" name="guess" autocomplete="off"
-           class="form-control col-md-1"/>
-    <input type="submit" value="Guess!" class="col-md-2 btn btn-success"/>
+    <label for="feedback" class="col-md-3 col-form-label">Enter feedback after completing the exercise:</label>
+    <input type="text" name="feedback" autocomplete="off"
+           class="form-control col-md-5"/>
+    <input type="submit" value="Submit Feedback" class="col-md-2 btn btn-primary"/>
   </div>
 </form>
 
