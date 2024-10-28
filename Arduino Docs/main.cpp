@@ -1,6 +1,14 @@
-//
-// Created by Sullivan Bryant on 10/28/24.
-//
-#include <Arduino.h>
+#include <ArduinoJson.h>
+#include <ArduinoWebsockets.h>
+#include <vector>
+#include <string>
 
+/*
+*/
 
+void setup() {
+}
+
+void loop() {
+	
+}
