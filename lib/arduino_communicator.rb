@@ -3,7 +3,7 @@ require 'httparty'
 
 class ArduinoCommunicator
   include HTTParty
-  base_uri 'http://arduino-device.local' # Replace with your actual Arduino URL
+  base_uri 'http://172.23.53.187' # Replace with your actual Arduino URL
 
   def initialize
     @headers = { "Content-Type" => "application/json" }
