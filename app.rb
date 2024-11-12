@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/flash'
 require_relative './lib/wordguesser_game.rb'
-require_relative './lib/arduino_communicator'
+require_relative './lib/arduino_communicator.rb'
 
 class WordGuesserApp < Sinatra::Base
 
