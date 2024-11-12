@@ -115,6 +115,10 @@ class WordGuesserApp < Sinatra::Base
     { status: 'success', message: 'Data received' }.to_json
   end
 
+  get '/retrieve-data' do
+    content_type :json
+    { message: 'Data retrieved successfully', data: 'Some example data' }.to_json
+  end
 
 end
 
