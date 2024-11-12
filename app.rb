@@ -102,6 +102,8 @@ class WordGuesserApp < Sinatra::Base
       flash[:message] = "Failed to send command to Arduino."
     end
 
+    content_type :json
+    { status: 'success', message: 'Message received' }.to_json
     redirect '/show'
   end
 
