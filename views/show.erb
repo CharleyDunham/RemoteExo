@@ -31,4 +31,13 @@
   </div>
 </form>
 
+<form action="/send_arduino_command" method="post">
+  <div class="form-group row">
+    <label for="command" class="col-md-3 col-form-label">Enter Arduino Command:</label>
+    <input type="text" name="command" autocomplete="off"
+           class="form-control col-md-5"/>
+    <input type="submit" value="Send Command" class="col-md-2 btn btn-primary"/>
+  </div>
+</form>
+
 <%= erb :new %>
