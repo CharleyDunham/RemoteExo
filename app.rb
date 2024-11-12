@@ -1,7 +1,10 @@
 require 'sinatra/base'
 require 'sinatra/flash'
+require 'sinatra'
+require 'json'
 require_relative './lib/wordguesser_game.rb'
 require_relative './lib/arduino_communicator.rb'
+
 
 class WordGuesserApp < Sinatra::Base
 
@@ -101,6 +104,17 @@ class WordGuesserApp < Sinatra::Base
 
     redirect '/show'
   end
+
+  post '/receive-data' do
+    request.body.rewind  # In case someone already read it
+    payload = JSON.parse(request.body.read) rescue {}
+    puts "Received data from Arduino: #{payload}"
+
+    # Respond to the Arduino (can be customized)
+    content_type :json
+    { status: 'success', message: 'Data received' }.to_json
+  end
+
 
 end
 
