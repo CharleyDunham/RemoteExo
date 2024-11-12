@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/flash'
 require_relative './lib/wordguesser_game.rb'
+require_relative './lib/arduino_communicator'
 
 class WordGuesserApp < Sinatra::Base
 
@@ -87,4 +88,19 @@ class WordGuesserApp < Sinatra::Base
   end
 
 
+  post '/send_arduino_command' do
+    communicator = ArduinoCommunicator.new
+    command = params[:command] # Assume this comes from a form or input
+
+    result = communicator.send_command(command)
+    if result
+      flash[:message] = "Arduino command sent successfully: #{result}"
+    else
+      flash[:message] = "Failed to send command to Arduino."
+    end
+
+    redirect '/show'
+  end
+
 end
+
