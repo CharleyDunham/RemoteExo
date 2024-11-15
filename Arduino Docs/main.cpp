@@ -1,9 +1,6 @@
 #include <WebSocketsClient.h>
-#include <ArduinoJson.h>
 #include <WiFiS3.h>
 #include <LiquidCrystal_74HC595.h>
-#include <map>
-#include <variant>
 
 //PW range: 0.5 - 2.5 ms
 //
