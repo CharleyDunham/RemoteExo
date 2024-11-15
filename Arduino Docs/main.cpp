@@ -111,8 +111,8 @@ void loop() {
   static unsigned int failed_attempts_wifi = 0;
   static bool wifi_sleep = false;
   static int server_state = 0;
-  auto webSocketEvent = [] (WStype_t type, uint8_t *payload, size_t length) {
-    switch (type):
+  auto webSocketEvent = [] (WStype_t in_type, uint8_t *payload, size_t length) {
+    switch (in_type) {
       case WStype_DISCONNECTED:
         Serial << "Disconnected from server" << endl;
         server_state = S_SLEEP;
@@ -121,20 +121,21 @@ void loop() {
         Serial << "Connected to server" << endl;
         break;
       case WStype_TEXT:
-        Serial << payload << endl;
+        Serial << *payload << endl;
         break;
       default:
         break;
+    }
   };
 
-  switch (exo_state): {
-    case D_EMPTY:
+  switch (exo_state) {
+    case D_empty:
     //do nothing for now
     break;
     case D_LCD_INIT: {
       init_lcd();
       ts = millis();
-      exo_state = S_IDLE;
+      exo_state = D_IDLE;
       break;
     }
     case D_IDLE:
@@ -144,9 +145,9 @@ void loop() {
       if (millis() - ts > flex_delay) {
         if (current_angle_pwm < goal_angle_pwm) {
           current_angle_pwm += angle_step_pwm;
-          ts = millis();
-          analogWrite(motor_pin, current_angle_pwm);
         }
+        ts = millis();
+        analogWrite(motor_pin, current_angle_pwm);
       }
       break;
     default:
@@ -177,7 +178,7 @@ void loop() {
         break;
       case WL_NO_SHIELD:
         lcd.setCursor(15, 0);
-        lcd.write(&no_shield_wifi); //write no_shield character stored in CGRAM
+        lcd.write(3); //write no_shield character stored in CGRAM
         lcd.home();
         wifi_sleep = true;
         break;
@@ -189,25 +190,27 @@ void loop() {
           if (rssi > -100) {
             if (rssi > -80) {
               if (rssi > -70) {
-                lcd.write(&full_wifi);
+                lcd.write(2);
                 lcd.home();
               } else {
-                lcd.write(&med_wifi);
+                lcd.write(1);
                 lcd.home();
               }
             } else {
-              lcd.write(&low_wifi);
+              lcd.write(1);
               lcd.home();
             }
           } else {
-            lcd.write(&low_wifi);
+            lcd.write(byte(0));
           }
         }
+        break;
       }
+
       case WL_DISCONNECTED:
         w_state = w->status();
         ts = millis();
-        lcd.write(&not_connected_wifi);
+        lcd.write(5);
         wifi_sleep = true;
         break;
       case WL_CONNECTION_LOST:
@@ -230,14 +233,23 @@ void loop() {
     }
     switch (server_state) {
       case S_INIT:
-        client_ws.begin(server);
+        client_ws.begin(server, 80);
         client_ws.onEvent(webSocketEvent);
         break;
       default:
         break;
     }
   }
-  
 }
-
-
+void init_lcd() {
+  Serial << "Initializing lcd custom characters" << endl;
+  lcd.begin(16, 2);
+  lcd.createChar(0, low_wifi);
+  lcd.createChar(1, med_wifi);
+  lcd.createChar(2, full_wifi);
+  lcd.createChar(3, no_shield_wifi);
+  lcd.createChar(4, error_wifi);
+  lcd.createChar(5, not_connected_wifi);
+  lcd.noBlink();
+  lcd.display();
+}
