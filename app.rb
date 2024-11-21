@@ -36,4 +36,13 @@ class RemoteExoApp < Sinatra::Base
       halt 404, { error: "Key not found: #{key}" }.to_json
     end
   end
+
+  # Route to set the flexion state
+  post '/set_flexion' do
+    flexion_state = params[:flexion] || "0" # Default flexion value
+    SHARED_STATE["flexion"] = flexion_state # Store the flexion state in shared state
+
+    flash[:notice] = "Flexion state set to: #{flexion_state}"
+    redirect '/'
+  end
 end

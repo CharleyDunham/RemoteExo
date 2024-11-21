@@ -1,15 +1,15 @@
-<h1>Set a Value for Arduino</h1>
-
-<form action="/set_value" method="post">
-  <label for="key">Key (optional):</label>
-  <input type="text" id="key" name="key" placeholder="default_key">
-  <br>
-  <label for="value">Value:</label>
-  <input type="text" id="value" name="value" required>
-  <br>
-  <button type="submit">Set Value</button>
-</form>
+<h1>Remote Exoskeleton Control Panel</h1>
 
 <% if flash[:notice] %>
-  <p style="color: green;"><%= flash[:notice] %></p>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
+
+<form action="/set_flexion" method="post">
+  <div class="form-group">
+    <label for="flexion">Set Flexion State:</label>
+    <input type="number" name="flexion" id="flexion" class="form-control" placeholder="Enter flexion value" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Set Flexion</button>
+</form>
