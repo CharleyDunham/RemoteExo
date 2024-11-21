@@ -1,3 +1,6 @@
+# Load the current environment
+require 'bundler/setup'
 require './app'
-run WordGuesserApp
 
+# Run the Sinatra app
+run RemoteExoApp

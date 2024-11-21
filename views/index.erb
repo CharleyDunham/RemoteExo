@@ -1,0 +1,15 @@
+<h1>Set a Value for Arduino</h1>
+
+<form action="/set_value" method="post">
+  <label for="key">Key (optional):</label>
+  <input type="text" id="key" name="key" placeholder="default_key">
+  <br>
+  <label for="value">Value:</label>
+  <input type="text" id="value" name="value" required>
+  <br>
+  <button type="submit">Set Value</button>
+</form>
+
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% end %>
