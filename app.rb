@@ -17,14 +17,14 @@ class RemoteExoApp < Sinatra::Base
   # Route to set the shared value
   post '/set_value' do
     key = params[:key] || "default_key" # Key for the value (optional)
-    value = params[:value]             # Value to store
-    SHARED_STATE[key] = value          # Store the value in the shared state
+    value = params[:value]              # Value to store
+    SHARED_STATE[key] = value           # Store the value in the shared state
 
     flash[:notice] = "Value set successfully: #{key} = #{value}"
     redirect '/'
   end
 
-  # Route for Arduino to retrieve the value
+  # Route to get a specific value by key
   get '/get_value' do
     key = params[:key] || "default_key" # Key to look up (optional)
     value = SHARED_STATE[key]           # Retrieve the value from shared state
@@ -44,5 +44,17 @@ class RemoteExoApp < Sinatra::Base
 
     flash[:notice] = "Flexion state set to: #{flexion_state}"
     redirect '/'
+  end
+
+  # Route to get the flexion state
+  get '/get_flexion' do
+    value = SHARED_STATE["flexion"] # Retrieve the flexion value from shared state
+
+    if value
+      content_type :json
+      { value: value }.to_json # Return the flexion value as JSON
+    else
+      halt 404, { error: "Flexion value not set" }.to_json
+    end
   end
 end
