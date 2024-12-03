@@ -51,10 +51,10 @@ class RemoteExoApp < Sinatra::Base
     value = SHARED_STATE["flexion"] # Retrieve the flexion value from shared state
 
     if value
-      content_type :json
-      { value: value }.to_json # Return the flexion value as JSON
+      content_type :text
+      value # Return the flexion value as plain text
     else
-      halt 404, { error: "Flexion value not set" }.to_json
+      halt 404, "Flexion value not set" # Return a 404 error with a plain text message
     end
   end
 end
