@@ -1,0 +1,19 @@
+<h1>Remote Exoskeleton Control Panel</h1>
+
+<% if flash[:message] %>
+  <div class="alert alert-success"><%= flash[:message] %></div>
+<% elsif flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<form action="/send_arduino_command" method="post">
+  <div class="form-group">
+    <label for="command">Send Command to Arduino:</label>
+    <input type="text" name="command" id="command" class="form-control" placeholder="Enter command" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+<div class="mt-4">
+  <a href="/retrieve-data" class="btn btn-secondary">Retrieve Data</a>
+</div>
