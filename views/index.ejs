@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remote Exo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">RemoteExo</a>
+  </nav>
+  <div class="container mt-5">
+    <h1>Remote Exoskeleton Control Panel</h1>
+
+    <!-- Display flash messages (notice or alert) -->
+    <% if (flash.notice && flash.notice.length > 0) { %>
+      <div class="alert alert-success"><%= flash.notice[0] %></div>
+    <% } else if (flash.alert && flash.alert.length > 0) { %>
+      <div class="alert alert-danger"><%= flash.alert[0] %></div>
+    <% } %>
+
+    <!-- Form to set a generic value -->
+    <form action="/set_value" method="post" class="mb-4">
+      <div class="form-group">
+        <label for="key">Key (optional):</label>
+        <input type="text" name="key" id="key" class="form-control" placeholder="Enter key">
+      </div>
+      <div class="form-group">
+        <label for="value">Value:</label>
+        <input type="text" name="value" id="value" class="form-control" placeholder="Enter value" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Set Value</button>
+    </form>
+
+    <!-- Form to set the flexion state -->
+    <form action="/set_flexion" method="post" class="mb-4">
+      <div class="form-group">
+        <label for="flexion">Set Flexion State:</label>
+        <input type="number" name="flexion" id="flexion" class="form-control" placeholder="Enter flexion value" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Set Flexion</button>
+    </form>
+
+    <!--
+    Optionally, you can add more forms if you implement additional endpoints,
+    such as one for sending an Arduino command or retrieving data.
+    For example:
+    
+    <form action="/send_arduino_command" method="post" class="mb-4">
+      <div class="form-group">
+        <label for="command">Send Command to Arduino:</label>
+        <input type="text" name="command" id="command" class="form-control" placeholder="Enter command" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+    
+    <div class="mt-4">
+      <a href="/retrieve-data" class="btn btn-secondary">Retrieve Data</a>
+    </div>
+    -->
+  </div>
+
+  <footer class="text-center mt-5">
+    <p>&copy; 2024 RemoteExo | Innovation in Rehabilitation</p>
+  </footer>
+</body>
+</html>
