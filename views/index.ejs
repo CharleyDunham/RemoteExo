@@ -13,7 +13,7 @@
   <div class="container mt-5">
     <h1>Remote Exoskeleton Control Panel</h1>
 
-    <!-- Display flash messages (notice or alert) -->
+    <!-- Display flash messages -->
     <% if (flash.notice && flash.notice.length > 0) { %>
       <div class="alert alert-success"><%= flash.notice[0] %></div>
     <% } else if (flash.alert && flash.alert.length > 0) { %>
@@ -42,27 +42,49 @@
       <button type="submit" class="btn btn-primary">Set Flexion</button>
     </form>
 
-    <!--
-    Optionally, you can add more forms if you implement additional endpoints,
-    such as one for sending an Arduino command or retrieving data.
-    For example:
-    
-    <form action="/send_arduino_command" method="post" class="mb-4">
+    <!-- Testing Section: Raw WebSocket command -->
+    <div class="mb-4">
       <div class="form-group">
-        <label for="command">Send Command to Arduino:</label>
-        <input type="text" name="command" id="command" class="form-control" placeholder="Enter command" required>
+        <label for="command">Send Command to Arduino via WebSocket:</label>
+        <input type="text" id="command" class="form-control" placeholder="Enter command">
       </div>
-      <button type="submit" class="btn btn-primary">Send</button>
-    </form>
-    
-    <div class="mt-4">
-      <a href="/retrieve-data" class="btn btn-secondary">Retrieve Data</a>
+      <button class="btn btn-primary" onclick="sendArduinoCommand()">Send Command via WebSocket</button>
     </div>
-    -->
   </div>
 
   <footer class="text-center mt-5">
     <p>&copy; 2024 RemoteExo | Innovation in Rehabilitation</p>
   </footer>
+
+  <!-- Raw WebSocket Client Script -->
+  <script>
+    // Determine the correct protocol based on the current page (ws for http, wss for https)
+    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+    // Build the WebSocket URL using the current host
+    const wsUrl = `${protocol}://${window.location.host}`;
+    const socket = new WebSocket(wsUrl);
+
+    socket.onopen = function() {
+      console.log("Connected to raw WebSocket server");
+    };
+
+    socket.onmessage = function(event) {
+      console.log("Received from server:", event.data);
+    };
+
+    socket.onerror = function(error) {
+      console.error("WebSocket error:", error);
+    };
+
+    // Function to send a command via raw WebSocket
+    function sendArduinoCommand() {
+      const commandInput = document.getElementById('command');
+      const command = commandInput ? commandInput.value : 'default_command';
+      if (command) {
+        console.log('Sending command:', command);
+        socket.send(command);
+      }
+    }
+  </script>
 </body>
 </html>

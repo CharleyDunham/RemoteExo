@@ -2,6 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
+const http = require('http');
+const WebSocket = require('ws'); // Raw WebSocket library
 
 const app = express();
 
@@ -81,8 +83,29 @@ app.get('/get_flexion', (req, res) => {
   }
 });
 
-// Start the server
+// Create an HTTP server using the Express app
+const server = http.createServer(app);
+
+// Create a WebSocket server that attaches to the HTTP server
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', (ws) => {
+  console.log('A client connected via raw WebSocket');
+
+  ws.on('message', (message) => {
+    console.log('Received via raw WebSocket:', message);
+    // Here you can add code to forward the command to your Arduino.
+    // For example, echo the message back to the client:
+    ws.send('Command received: ' + message);
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected from raw WebSocket');
+  });
+});
+
+// Start the server using the HTTP server (with WebSocket attached)
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
