@@ -93,10 +93,11 @@ wss.on('connection', (ws) => {
   console.log('A client connected via raw WebSocket');
 
   ws.on('message', (message) => {
-    console.log('Received via raw WebSocket:', message);
-    // Here you can add code to forward the command to your Arduino.
-    // For example, echo the message back to the client:
-    ws.send('Command received: ' + message);
+    // Convert the message buffer to a string
+    const msgString = message.toString();
+    console.log('Received via raw WebSocket:', msgString);
+    // Echo the message back to the client
+    ws.send('Command received: ' + msgString);
   });
 
   ws.on('close', () => {
