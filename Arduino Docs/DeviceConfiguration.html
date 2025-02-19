@@ -116,9 +116,18 @@
         option.textContent = pin.toString();
         this.pinsDD.appendChild(option);
       });
+      /**
+       * Add label to div
+       */
       div.appendChild(label);
+      /**
+       * Add dropdown
+       */
       div.appendChild(this.pinsDD);
-
+      /**
+       * Add div to document
+       */
+      document.appendChild(div);
     };
     constructor() {
       if (ServoForm.#index === undefined) {
@@ -126,7 +135,6 @@
       } else {
         ServoForm.#index++;
       }
-
     }
     static get index() {
       return ServoForm.#index;
@@ -138,7 +146,8 @@
   const addServo = document.getElementById('addServo');
   addServo.addEventListener('click', () => {
     let servo = new ServoForm();
-  }
+  });
+
 
 </script>
 </body>
