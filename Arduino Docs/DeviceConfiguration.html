@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Device Configuration</title>
+</head>
+<body>
+<h1>Device Configuration</h1>
+<div class="container">
+  <label for="device">Device: </label>
+  <select id="device">
+    <option value="nano" selected="selected">Nano ESP32</option>
+    <option value="r4">UNO R4 Renesas</option>
+  </select>
+</div>
+<div class="container">
+  <label for="addServo">Servos:</label>
+  <button id="addServo">+</button>
+</div>
+<table>
+  <tr>
+    <th></th>
+  </tr>
+</table>
+<script>
+  import "/Pin.js";
+  /*
+    TODO: Finish servo-motor class (if needed):
+      1. PIN REQUIREMENTS:
+          - Pin occupied removed from available pins, but
+          - the pin currently occupied still visible in dropdown.
+          - If using the R4, not all pins are PWM-capable. These are:
+              D11, D10, D9, D6, D5, D3
+              ** These are the only pins the R4 can use for servo motors.
+                we really don't need any since we're not using it). **
+          * --------------------   COMMAND   ------------------------ *
+          * let command = {
+          *   "ATTACH-SERVO" : `${pin}`
+          * };
+          * --------------------  IMPLEMENTATION -------------------- *
+          *     const commandJSON = JSON.stringify(data);
+          *     ws.send(commandJSON);
+          * --------------------------------------------------------- *
+      2. ANGLE-STEP
+          - A double-spin box which lets me determine angle-step required.
+            ***---- We can play with this and determine which values to consider to normalize motor speed ---***
+          * --------------------   COMMAND   ------------------------ *
+          * let command =
+          * {
+          *  `SERVO-${index}`:
+          *                  {
+          *                   'SET':
+          *                        {
+          *                         'ANGLE-STEP' : `${val}
+          *                        }
+          *                   }
+          * };
+          * --------------------  IMPLEMENTATION -------------------- *
+          *     const commandJSON = JSON.stringify(data);
+          *     ws.send(commandJSON);
+          * --------------------------------------------------------- *
+      3. TIME-DELAY
+          - Another DSB to play with the time-delay (between each angle increment)
+          * --------------------   COMMAND   ------------------------ *
+          * let command =
+          * {
+          *  `SERVO-${index}`:
+          *                  {
+          *                   'SET':
+          *                        {
+          *                         'TIME-DELAY' : `${val}
+          *                        }
+          *                   }
+          * };
+          * --------------------  IMPLEMENTATION -------------------- *
+          *     const commandJSON = JSON.stringify(data);
+          *     ws.send(commandJSON);
+          * --------------------------------------------------------- *
+   */
+  class ServoForm {
+    static #index;
+    static #getHTML_DIV = (classname) => {
+        let div = document.createElement('div');
+        div.className = classname;
+      /**
+       * Create a label
+       * @type {HTMLLabelElement}
+       */
+        let label = document.createElement('label');
+      /**
+       * Set its text to be the servo motor no.
+       */
+        label.textContent = ServoForm.#index;
+      /**
+       * Add to new div
+       */
+        div.appendChild(label);
+      /**
+       * Create a new selector dropdown
+       */
+      this.pinsDD = document.createElement('select');
+      /**
+       * Set new drop-down's id to be SERVO-${index}-PIN
+       */
+      this.pinsDD.id = `SERVO-${ServoForm.#index}-PIN`;
+      /**
+       * Make label's 'for' to be for dropdown.
+       */
+      label.setAttribute('for', this.pinsDD.id);
+      /**
+       * Add all available pins to dropdown.
+       */
+      const pins = Pin.availablePins.nano.analog + Pin.availablePins.nano.digital;
+      pins.forEach((pin) => {
+        let option = document.createElement('option');
+        option.textContent = pin.toString();
+        this.pinsDD.appendChild(option);
+      });
+      div.appendChild(label);
+      div.appendChild(this.pinsDD);
+
+    };
+    constructor() {
+      if (ServoForm.#index === undefined) {
+        ServoForm.#index = 1;
+      } else {
+        ServoForm.#index++;
+      }
+
+    }
+    static get index() {
+      return ServoForm.#index;
+    }
+    static set index(val) {
+      ServoForm.#index = val;
+    }
+  }
+  const addServo = document.getElementById('addServo');
+  addServo.addEventListener('click', () => {
+    let servo = new ServoForm();
+  }
+
+</script>
+</body>
+</html>
