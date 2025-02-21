@@ -1,0 +1,117 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #303030;
+    color: white;
+}
+
+/* Header Title */
+.title {
+    background-color: black;
+    padding: 10px;
+    font-size: 20px;
+    text-align: left;
+}
+
+/* Section Titles */
+.section-title {
+    background-color: #343434;
+    padding: 10px;
+    margin: 0;
+    font-size: 15px;
+}
+
+/* Section Body Layout */
+.section-body {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* DEVICE STATUS Specific Styles */
+.device-status .section-body {
+    flex-wrap: wrap;
+}
+
+.device-info, .messages {
+    flex: 1;
+}
+
+.col-title {
+    background-color: #8c8c8c;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.info-label,
+.info-value {
+    flex: 1;
+    padding: 5px;
+}
+
+/* SERVO Section Styles */
+.servo-section .servo-body {
+    flex-direction: column;
+    gap: 20px;
+}
+
+.servo-row {
+    display: flex;
+    gap: 20px;
+}
+
+.servo-col {
+    flex: 1;
+}
+
+.servo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.servo-position .servo-item {
+    flex: 1;
+}
+
+/* IMU Configuration Styles */
+.imu-configuration .imu-body {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.imu-group {
+    flex: 1;
+    min-width: 300px;
+}
+
+.imu-group table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.imu-group th,
+.imu-group td {
+    border: 1px solid #666;
+    padding: 5px;
+    text-align: center;
+}
+
+.imu-group th {
+    background-color: #555;
+}
+.servo-item-label {
+    justify-content: right;
+}

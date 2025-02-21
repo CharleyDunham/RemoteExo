@@ -25,19 +25,19 @@ void onWebSocketEvent(WStype_t type, uint8_t *payload, size_t length) {
   switch (type) {
     case WStype_CONNECTED:
     /*
-     *  WebSocket connected event: just say hi from team 13
+       WebSocket connected event: just say hi from team 13
      */
       Serial.printf("\nconnected to ws server in domain %s", host);
       webSocket.sendTXT("hi from team 13");
       break;
     /*
-     *  WS disconnected event: just inform myself through serial monitor
+       WS disconnected event: just inform myself through serial monitor
      */
     case WStype_DISCONNECTED:
       Serial.println("Disconnected from WebSocket server.");
       break;
     /*
-     *  WS new message: will be deserialized
+       WS new message: will be deserialized
      */
     case WStype_TEXT:
     {

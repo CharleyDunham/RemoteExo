@@ -1,154 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Device Configuration</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Device Panel</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Device Configuration</h1>
-<div class="container">
-  <label for="device">Device: </label>
-  <select id="device">
-    <option value="nano" selected="selected">Nano ESP32</option>
-    <option value="r4">UNO R4 Renesas</option>
-  </select>
-</div>
-<div class="container">
-  <label for="addServo">Servos:</label>
-  <button id="addServo">+</button>
-</div>
-<table>
-  <tr>
-    <th></th>
-  </tr>
-</table>
-<script>
-  import "/Pin.js";
-  /*
-    TODO: Finish servo-motor class (if needed):
-      1. PIN REQUIREMENTS:
-          - Pin occupied removed from available pins, but
-          - the pin currently occupied still visible in dropdown.
-          - If using the R4, not all pins are PWM-capable. These are:
-              D11, D10, D9, D6, D5, D3
-              ** These are the only pins the R4 can use for servo motors.
-                we really don't need any since we're not using it). **
-          * --------------------   COMMAND   ------------------------ *
-          * let command = {
-          *   "ATTACH-SERVO" : `${pin}`
-          * };
-          * --------------------  IMPLEMENTATION -------------------- *
-          *     const commandJSON = JSON.stringify(data);
-          *     ws.send(commandJSON);
-          * --------------------------------------------------------- *
-      2. ANGLE-STEP
-          - A double-spin box which lets me determine angle-step required.
-            ***---- We can play with this and determine which values to consider to normalize motor speed ---***
-          * --------------------   COMMAND   ------------------------ *
-          * let command =
-          * {
-          *  `SERVO-${index}`:
-          *                  {
-          *                   'SET':
-          *                        {
-          *                         'ANGLE-STEP' : `${val}
-          *                        }
-          *                   }
-          * };
-          * --------------------  IMPLEMENTATION -------------------- *
-          *     const commandJSON = JSON.stringify(data);
-          *     ws.send(commandJSON);
-          * --------------------------------------------------------- *
-      3. TIME-DELAY
-          - Another DSB to play with the time-delay (between each angle increment)
-          * --------------------   COMMAND   ------------------------ *
-          * let command =
-          * {
-          *  `SERVO-${index}`:
-          *                  {
-          *                   'SET':
-          *                        {
-          *                         'TIME-DELAY' : `${val}
-          *                        }
-          *                   }
-          * };
-          * --------------------  IMPLEMENTATION -------------------- *
-          *     const commandJSON = JSON.stringify(data);
-          *     ws.send(commandJSON);
-          * --------------------------------------------------------- *
-   */
-  class ServoForm {
-    static #index;
-    static #getHTML_DIV = (classname) => {
-        let div = document.createElement('div');
-        div.className = classname;
-      /**
-       * Create a label
-       * @type {HTMLLabelElement}
-       */
-        let label = document.createElement('label');
-      /**
-       * Set its text to be the servo motor no.
-       */
-        label.textContent = ServoForm.#index;
-      /**
-       * Add to new div
-       */
-        div.appendChild(label);
-      /**
-       * Create a new selector dropdown
-       */
-      this.pinsDD = document.createElement('select');
-      /**
-       * Set new drop-down's id to be SERVO-${index}-PIN
-       */
-      this.pinsDD.id = `SERVO-${ServoForm.#index}-PIN`;
-      /**
-       * Make label's 'for' to be for dropdown.
-       */
-      label.setAttribute('for', this.pinsDD.id);
-      /**
-       * Add all available pins to dropdown.
-       */
-      const pins = Pin.availablePins.nano.analog + Pin.availablePins.nano.digital;
-      pins.forEach((pin) => {
-        let option = document.createElement('option');
-        option.textContent = pin.toString();
-        this.pinsDD.appendChild(option);
-      });
-      /**
-       * Add label to div
-       */
-      div.appendChild(label);
-      /**
-       * Add dropdown
-       */
-      div.appendChild(this.pinsDD);
-      /**
-       * Add div to document
-       */
-      document.appendChild(div);
-    };
-    constructor() {
-      if (ServoForm.#index === undefined) {
-        ServoForm.#index = 1;
-      } else {
-        ServoForm.#index++;
-      }
-    }
-    static get index() {
-      return ServoForm.#index;
-    }
-    static set index(val) {
-      ServoForm.#index = val;
-    }
-  }
-  const addServo = document.getElementById('addServo');
-  addServo.addEventListener('click', () => {
-    let servo = new ServoForm();
-  });
+<!-- Header -->
+<header class="title">DEVICE PANEL</header>
 
+<!-- Device Status Section -->
+<section class="device-status">
+  <h2 class="section-title">DEVICE STATUS</h2>
+  <div class="section-body">
+    <div class="device-info">
+      <h3 class="col-title">Wi-Fi</h3>
+      <div class="info-row">
+        <div class="info-label">Status</div>
+        <div class="info-value">Offline</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Network</div>
+        <div class="info-value">Unavailable</div>
+      </div>
+    </div>
+    <div class="messages">
+      <h3 class="col-title">Messages</h3>
+      <input name="send-console-input" type="text" placeholder="Type your message">
+      <button type="button">Send</button>
+    </div>
+  </div>
+</section>
 
-</script>
+<!-- Servo Section -->
+<section class="servo-section">
+  <h2 class="section-title">SERVO</h2>
+  <div class="section-body servo-body">
+    <div class="servo-row">
+      <div class="servo-col" id="col1-servo">
+        <div class="servo-item">
+          <label>Enable Servo</label>
+          <input type="checkbox">
+        </div>
+        <div class="servo-item">
+          <label>Stream Position</label>
+          <input type="checkbox">
+        </div>
+        <div class="servo-item">
+          <label>Pin</label>
+          <select name="servo-pin-selection">
+            <option value="opt1">Option 1</option>
+            <option value="opt2">Option 2</option>
+          </select>
+        </div>
+      </div>
+      <div class="servo-col" id="col2-servo">
+        <div class="servo-item">
+          <label>Angle-step</label>
+          <input type="number" name="servo-angle-step-value">
+        </div>
+        <div class="servo-item">
+          <label>Time-delay</label>
+          <input type="number" name="servo-time-delay-value">
+        </div>
+        <div class="servo-item">
+          <label>Max-range</label>
+          <input type="number" name="servo-max-range-value">
+        </div>
+      </div>
+    </div>
+    <!-- New row for Position -->
+    <div class="servo-row servo-position">
+      <div class="servo-item" id="servo-item-label">
+        <label id="pos-label">Position</label>
+      </div>
+      <div class="servo-item">
+        <p>0.00</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMU Configuration Section -->
+<section class="imu-configuration">
+  <h2 class="section-title">IMU CONFIGURATION</h2>
+  <div class="imu-body">
+    <div class="imu-group">
+      <h3>Crossbow</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Vector</th>
+          <th>i</th>
+          <th>j</th>
+          <th>k</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <label>
+              a <input type="checkbox">
+            </label>
+          </td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="imu-group">
+      <h3>MPU9250</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Vector</th>
+          <th>i</th>
+          <th>j</th>
+          <th>k</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            <label>
+              a <input type="checkbox">
+            </label>
+          </td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              G <input type="checkbox">
+            </label>
+          </td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              B <input type="checkbox">
+            </label>
+          </td>
+          <td>0.00</td>
+          <td>0.00</td>
+          <td>0.00</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 </body>
 </html>
