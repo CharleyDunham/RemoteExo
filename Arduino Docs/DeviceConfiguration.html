@@ -27,8 +27,11 @@
     </div>
     <div class="messages">
       <h3 class="col-title">Messages</h3>
-      <input name="send-console-input" type="text" placeholder="Type your message">
-      <button type="button">Send</button>
+      <div>
+        <textarea id="consoleLog" readonly></textarea>
+      </div>
+      <input id="send-console-input" type="text" placeholder="Type your message">
+      <button type="button" id="sendTextButton">Send</button>
     </div>
   </div>
 </section>

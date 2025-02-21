@@ -123,6 +123,7 @@ class DeviceConfig {
     #angleStepDSB;
     #timeDelayDSB;
     #maxRangeDSB;
+    #sendTextButton;
     /**
      * create a new ws if one wasn't passed.
      */
@@ -134,6 +135,7 @@ class DeviceConfig {
         this.#angleStepDSB = document.getElementById('servo-angle-step-value');
         this.#timeDelayDSB = document.getElementById('servo-time-delay-value');
         this.#maxRangeDSB = document.getElementById('servo-max-range-value');
+        this.#sendTextButton = document.getElementById('sendTextButton');
         this.#populatePins();
         this.#setupEventListeners();
     }
@@ -162,10 +164,13 @@ class DeviceConfig {
      * add anonymous callbacks for DOM elements
      */
     #setupEventListeners() {
+        /**
+         * TODO: Add event listener for ws message
+         * this.#ws.onMessage('' propagate only if valid header
+         */
         this.#servoCB.addEventListener('change', (event) => this.#sendCommand('enableServo', event.target.checked));
         this.#servoStream.addEventListener('change', (event) => this.#sendCommand('enableStream', event.target.checked));
         this.#servoPinSelector.addEventListener('change', (event) => this.#sendCommand('setServoPin', event.target.value));
-
         this.#angleStepDSB.addEventListener('change', (event) => {
             let value = parseInt(event.target.value);
             if (value >= 0 && value <= 360) {
@@ -187,6 +192,10 @@ class DeviceConfig {
             if (value >= 0 && value <= 360) {
                 this.#sendCommand('maxRange', value);
             }
+        });
+        this.#sendTextButton.addEventListener('click', (event) => {
+            let val = event.target.value;
+            this.#ws.send(JSON.stringify({val}));
         });
     }
 
