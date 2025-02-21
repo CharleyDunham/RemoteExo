@@ -41,15 +41,15 @@
       <div class="servo-col" id="col1-servo">
         <div class="servo-item">
           <label>Enable Servo</label>
-          <input type="checkbox">
+          <input type="checkbox" id="enableServo">
         </div>
         <div class="servo-item">
           <label>Stream Position</label>
-          <input type="checkbox">
+          <input type="checkbox" id="enableServoStream">
         </div>
         <div class="servo-item">
           <label>Pin</label>
-          <select name="servo-pin-selection">
+          <select name="servo-pin-selection" id="servoPin">
             <option value="opt1">Option 1</option>
             <option value="opt2">Option 2</option>
           </select>
@@ -58,7 +58,7 @@
       <div class="servo-col" id="col2-servo">
         <div class="servo-item">
           <label>Angle-step</label>
-          <input type="number" name="servo-angle-step-value">
+          <input type="number" id="servo-angle-step-value">
         </div>
         <div class="servo-item">
           <label>Time-delay</label>
@@ -159,4 +159,5 @@
   </div>
 </section>
 </body>
+<script src="deviceConfig.js"></script>
 </html>
