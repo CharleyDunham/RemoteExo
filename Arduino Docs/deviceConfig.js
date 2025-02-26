@@ -124,12 +124,15 @@ class DeviceConfig {
     #timeDelayDSB;
     #maxRangeDSB;
     #sendTextButton;
+    #console;
+
     /**
      * create a new ws if one wasn't passed.
      */
     constructor(ws = null) {
         this.#ws = ws || new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
         this.#servoCB = document.getElementById('enableServo');
+        this.#console = document.getElementById('consoleLog');
         this.#servoStream = document.getElementById('enableServoStream');
         this.#servoPinSelector = document.getElementById('servoPin');
         this.#angleStepDSB = document.getElementById('servo-angle-step-value');
@@ -139,7 +142,6 @@ class DeviceConfig {
         this.#populatePins();
         this.#setupEventListeners();
     }
-
     /**
      * populate servo pin selector
      */
@@ -166,8 +168,14 @@ class DeviceConfig {
     #setupEventListeners() {
         /**
          * TODO: Add event listener for ws message
-         * this.#ws.onMessage('' propagate only if valid header
+         *  this.#ws.onMessage('' propagate only if valid header
          */
+        this.#ws.addEventListener('message', (event) => {
+            let header = JSON.stringify(event.target.value);
+            if (header === 'ConsoleMessage') {
+                this.#console.innerHTML += `\n${header}`;
+            }
+        });
         this.#servoCB.addEventListener('change', (event) => this.#sendCommand('enableServo', event.target.checked));
         this.#servoStream.addEventListener('change', (event) => this.#sendCommand('enableStream', event.target.checked));
         this.#servoPinSelector.addEventListener('change', (event) => this.#sendCommand('setServoPin', event.target.value));

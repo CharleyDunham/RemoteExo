@@ -7,160 +7,216 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Header -->
-<header class="title">DEVICE PANEL</header>
+<header class="header">
+  <h1>DEVICE PANEL</h1>
+</header>
 
-<!-- Device Status Section -->
-<section class="device-status">
-  <h2 class="section-title">DEVICE STATUS</h2>
-  <div class="section-body">
-    <div class="device-info">
-      <h3 class="col-title">Wi-Fi</h3>
-      <div class="info-row">
-        <div class="info-label">Status</div>
-        <div class="info-value">Offline</div>
+<main>
+  <!-- Device Status Section -->
+  <section class="section device-status">
+    <h2 class="section-title">DEVICE STATUS</h2>
+    <div class="section-body">
+      <div class="card device-info">
+        <h3 class="card-title">Wi-Fi</h3>
+        <div class="info-row">
+          <span class="info-label">Status:</span>
+          <span class="info-value">Offline</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Network:</span>
+          <span class="info-value">Unavailable</span>
+        </div>
       </div>
-      <div class="info-row">
-        <div class="info-label">Network</div>
-        <div class="info-value">Unavailable</div>
-      </div>
-    </div>
-    <div class="messages">
-      <h3 class="col-title">Messages</h3>
-      <div>
+      <div class="card messages">
+        <h3 class="card-title">Messages</h3>
         <textarea id="consoleLog" readonly></textarea>
+        <div class="message-input">
+          <input id="send-console-input" type="text" placeholder="Type your message">
+          <button id="sendTextButton" type="button">Send</button>
+        </div>
       </div>
-      <input id="send-console-input" type="text" placeholder="Type your message">
-      <button type="button" id="sendTextButton">Send</button>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Servo Section -->
-<section class="servo-section">
-  <h2 class="section-title">SERVO</h2>
-  <div class="section-body servo-body">
-    <div class="servo-row">
-      <div class="servo-col" id="col1-servo">
-        <div class="servo-item">
-          <label>Enable Servo</label>
-          <input type="checkbox" id="enableServo">
+  <!-- Servo Section -->
+  <section class="section servo-section">
+    <h2 class="section-title">SERVO</h2>
+    <div class="section-body servo-body">
+      <div class="servo-row">
+        <div class="servo-col">
+          <div class="servo-item">
+            <label for="enableServo">Enable Servo</label>
+            <input type="checkbox" id="enableServo">
+          </div>
+          <div class="servo-item">
+            <label for="enableServoStream">Stream Position</label>
+            <input type="checkbox" id="enableServoStream">
+          </div>
+          <div class="servo-item">
+            <label for="servoPin">Pin</label>
+            <select id="servoPin" name="servo-pin-selection">
+              <option value="opt1">Option 1</option>
+              <option value="opt2">Option 2</option>
+            </select>
+          </div>
         </div>
-        <div class="servo-item">
-          <label>Stream Position</label>
-          <input type="checkbox" id="enableServoStream">
-        </div>
-        <div class="servo-item">
-          <label>Pin</label>
-          <select name="servo-pin-selection" id="servoPin">
-            <option value="opt1">Option 1</option>
-            <option value="opt2">Option 2</option>
-          </select>
+        <div class="servo-col">
+          <div class="servo-item">
+            <label for="servo-angle-step-value">Angle-step</label>
+            <input type="number" id="servo-angle-step-value">
+          </div>
+          <div class="servo-item">
+            <label for="servo-time-delay-value">Time-delay</label>
+            <input type="number" id="servo-time-delay-value" name="servo-time-delay-value">
+          </div>
+          <div class="servo-item">
+            <label for="servo-max-range-value">Max-range</label>
+            <input type="number" id="servo-max-range-value" name="servo-max-range-value">
+          </div>
         </div>
       </div>
-      <div class="servo-col" id="col2-servo">
-        <div class="servo-item">
-          <label>Angle-step</label>
-          <input type="number" id="servo-angle-step-value">
+      <div class="servo-row servo-position">
+        <div class="servo-item label-item">
+          <label for="pos-value">Position</label>
         </div>
         <div class="servo-item">
-          <label>Time-delay</label>
-          <input type="number" name="servo-time-delay-value">
-        </div>
-        <div class="servo-item">
-          <label>Max-range</label>
-          <input type="number" name="servo-max-range-value">
+          <p id="pos-value">0.00</p>
         </div>
       </div>
     </div>
-    <!-- New row for Position -->
-    <div class="servo-row servo-position">
-      <div class="servo-item" id="servo-item-label">
-        <label id="pos-label">Position</label>
-      </div>
-      <div class="servo-item">
-        <p>0.00</p>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- IMU Configuration Section -->
-<section class="imu-configuration">
-  <h2 class="section-title">IMU CONFIGURATION</h2>
-  <div class="imu-body">
-    <div class="imu-group">
-      <h3>Crossbow</h3>
-      <table>
-        <thead>
-        <tr>
-          <th>Vector</th>
-          <th>i</th>
-          <th>j</th>
-          <th>k</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            <label>
-              a <input type="checkbox">
-            </label>
-          </td>
-          <td>0.00</td>
-          <td>0.00</td>
-          <td>0.00</td>
-        </tr>
-        </tbody>
-      </table>
+  <!-- IMU Configuration Section -->
+  <section class="section imu-config">
+    <h2 class="section-title">IMU Configuration</h2>
+    <div class="section-body imu-config-body">
+      <div class="imu-config-col">
+        <h3 class="card-title">Crossbow</h3>
+        <div class="config-group">
+          <div class="config-section">
+            <h4 class="sub-section-title">Pin Configuration</h4>
+            <div class="config-row">
+              <label for="cb-x-pin">x-pin</label>
+              <select id="cb-x-pin"></select>
+            </div>
+            <div class="config-row">
+              <label for="cb-y-pin">y-pin</label>
+              <select id="cb-y-pin"></select>
+            </div>
+            <div class="config-row">
+              <label for="cb-z-pin">z-pin</label>
+              <select id="cb-z-pin"></select>
+            </div>
+          </div>
+          <div class="config-section">
+            <h4 class="sub-section-title">Enable</h4>
+            <div class="config-row">
+              <label for="cb-enabled">Enable accelerometer</label>
+              <input type="checkbox" id="cb-enabled">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="imu-config-col">
+        <h3 class="card-title">MPU9250</h3>
+        <div class="config-group">
+          <div class="config-section">
+            <h4 class="sub-section-title">Pin Configuration</h4>
+            <div class="config-row">
+              <label for="use-i2c-mpu9250">Use I2C</label>
+              <input type="checkbox" id="use-i2c-mpu9250">
+            </div>
+          </div>
+          <div class="config-section">
+            <h4 class="sub-section-title">Enable</h4>
+            <div class="config-row">
+              <label for="enable-mpu9250">Enable</label>
+              <input type="checkbox" id="enable-mpu9250">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="imu-group">
-      <h3>MPU9250</h3>
-      <table>
-        <thead>
-        <tr>
-          <th>Vector</th>
-          <th>i</th>
-          <th>j</th>
-          <th>k</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            <label>
-              a <input type="checkbox">
-            </label>
-          </td>
-          <td>0.00</td>
-          <td>0.00</td>
-          <td>0.00</td>
-        </tr>
-        <tr>
-          <td>
-            <label>
-              G <input type="checkbox">
-            </label>
-          </td>
-          <td>0.00</td>
-          <td>0.00</td>
-          <td>0.00</td>
-        </tr>
-        <tr>
-          <td>
-            <label>
-              B <input type="checkbox">
-            </label>
-          </td>
-          <td>0.00</td>
-          <td>0.00</td>
-          <td>0.00</td>
-        </tr>
-        </tbody>
-      </table>
+  </section>
+
+  <!-- IMU Data Section -->
+  <section class="section imu-data">
+    <h2 class="section-title">IMU DATA</h2>
+    <div class="imu-data-body">
+      <div class="imu-data-group">
+        <h3 class="card-title">Crossbow</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Vector</th>
+            <th>i</th>
+            <th>j</th>
+            <th>k</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <label for="cb-a">
+                a <input type="checkbox" id="cb-a">
+              </label>
+            </td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="imu-data-group">
+        <h3 class="card-title">MPU9250</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Vector</th>
+            <th>i</th>
+            <th>j</th>
+            <th>k</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              <label for="mpu-a">
+                a <input type="checkbox" id="mpu-a">
+              </label>
+            </td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
+          </tr>
+          <tr>
+            <td>
+              <label for="mpu-g">
+                G <input type="checkbox" id="mpu-g">
+              </label>
+            </td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
+          </tr>
+          <tr>
+            <td>
+              <label for="mpu-b">
+                B <input type="checkbox" id="mpu-b">
+              </label>
+            </td>
+            <td>0.00</td>
+            <td>0.00</td>
+            <td>0.00</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
-</body>
+  </section>
+</main>
+
 <script src="deviceConfig.js"></script>
+</body>
 </html>
