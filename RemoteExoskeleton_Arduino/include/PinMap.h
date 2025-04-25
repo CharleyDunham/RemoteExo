@@ -1,12 +1,15 @@
 //
-// Created by Sullivan Bryant on 4/9/25.
+// Created by Sullivan Bryant on 4/24/25.
 //
 
-#ifndef REMAPPINSTRING_H
-#define REMAPPINSTRING_H
+#ifndef PINMAP_H
+#define PINMAP_H
 #include <Arduino.h>
+#include <cstdlib>
+#include <cctype>
+
 static const char *getRemap(const uint8_t &pin) {
-     switch (pin) {
+    switch (pin) {
         case A0: return "A0";
         case A1: return "A1";
         case A2: return "A2";
@@ -32,5 +35,25 @@ static const char *getRemap(const uint8_t &pin) {
         default: return "";
     }
 }
+// returns -1 if invalid.
+static int8_t getMap(const char *pin) {
+    // Check if null or empty.
+    if (!pin || !pin[0])
+        return -1;
+    char letter = pin[0];
+    char *endptr = nullptr;
+    long num = std::strtol(pin + 1, &endptr, 10);
+    if (endptr == pin + 1 || *endptr != '\0')
+        return -1;
+    if (letter == 'A') {
+        if (num >= 0 && num <= 7)
+            return A0 + num;
+    }
+    else if (letter == 'D') {
+        if (num >= 0 && num <= 13)
+            return num;
+    }
+    return -1;  // invalid
+}
 
-#endif //REMAPPINSTRING_H
+#endif //PINMAP_H

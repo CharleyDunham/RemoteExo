@@ -1,0 +1,566 @@
+                           ELEMENT IDS
+           SERVO
+Angle-step          'SERVO ANGLE_STEP'
+Time-delay          'SERVO TIME_DELAY'
+Position            'SERVO POSITION'
+Start angle         'SERVO START_ANGLE'
+Stop angle          'SERVO STOP_ANGLE'
+Motion              'SERVO MOTION'
+Enable motion       'SERVO ACTUATE_ON'
+Disable motion      'SERVO ACTUATE_OFF'
+Pin                 'SERVO PIN'
+Min PWM             'SERVO MIN_PWM'
+Max PWM             'SERVO MAX_PWM'
+Max Angle           'SERVO MAX_ANGLE'
+        FLEX SENSORS
+                          Finger 2                     Finger 3
+Pin                     'FLEX_2 PIN'                'FLEX_3 PIN'
+Raw reading             'FLEX_2 READ'               'FLEX_3 READ'
+Fixed resistor          'FLEX_2 FIXED_RESIST'       'FLEX_3 FIXED_RESIST'
+Calculated voltage      'FLEX_2 VOLT'               'FLEX_3 VOLT'
+Calculated resistance   'FLEX_2 RESIST'             'FLEX_3 RESIST'
+
+                            COMMANDS
+//-----------------------------------------------------------------
+//===========================   CLIENT  ===========================
+
+    ///////////////////////////////
+    /*  SETTERS *///    Servo
+    /****************************/
+        // Angle-step | id='SERVO ANGLE_STEP'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "ANGLE_STEP",
+        val: -1
+    };
+
+        // Time-delay | id='SERVO TIME_DELAY'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "TIME_DELAY",
+        val: 10
+    };
+
+        // Position | id='SERVO POSITION'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "POSITION",
+        val: 0
+    };
+
+        // Start angle | id='SERVO START_ANGLE'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "START_ANGLE",
+        val: 0
+    };
+        // Stop angle | id='SERVO STOP_ANGLE'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "STOP_ANGLE",
+        val: 270
+    };
+        // Motion: available modes: LOOP, SWEEP, ONE_SHOT
+        // id='SERVO MOTION' - option: 'Loop' value='LOOP'
+        //                   - option: 'Sweep' value='SWEEP'
+        //                   - option: 'One shot' value='ONE_SHOT'
+        //
+        /* 
+                LOOP:  One direction is controlled (from start -> stop)
+                SWEEP: Both directions are controlled
+                ONE_SHOT: Only traverses through controlled direction one iteration 
+        */
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "MOTION",
+        val: "LOOP"
+    };
+        // Enable | id='SERVO ACTUATE_ON'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "ACTUATE",
+        val: true
+    };
+        // Disable | id='SERVO ACTUATE_OFF'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "ACTUATE",
+        val: false
+    };
+        // Pin | id='SERVO PIN'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "PIN",
+        val: D4
+    };
+        // Min PWM | id='SERVO MIN_PWM'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "MIN_PWM",
+        val: 500
+    }
+        // Max PWM | id='SERVO MAX_PWM'
+    {
+        dev: 'SERVO',
+        req: 'SET',
+        attr: 'MAX_PWM',
+        val: 2500
+    }
+        // Max Angle | id='SERVO MAX_ANGLE'
+    {
+        dev: "SERVO",
+        req: "SET",
+        attr: "MAX_ANGLE",
+        val: 270
+    }
+    ///////////////////////////////
+    /*  SETTERS */// Flex Sensors
+    /****************************/
+        // Pin - Flex sensor 2
+    {
+        dev: "FLEX_2",
+        req: "SET",
+        attr: "PIN",
+        val: A0 // or false == not connected
+    }
+        // Pin - Flex sensor 3
+    {
+        dev: "FLEX_3",
+        req: "SET",
+        attr: "PIN",
+        val: A1 // or false == not connected
+    }
+        // Pin - Flex sensor 4
+    {
+        dev: "FLEX_4",
+        req: "SET",
+        attr: "PIN",
+        val: A2 // or false == not connected
+    }
+        // Pin - Flex sensor 5
+    {
+        dev: "FLEX_5",
+        req: "SET",
+        attr: "PIN",
+        val: A3 // or false == not connected
+    }
+
+    ///////////////////////////////
+    /*  GETTERS */// Servo
+    /****************************/
+        // Angle-step | id='SERVO ANGLE_STEP'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ANGLE_STEP"
+    };
+    
+        // Time-delay | id='SERVO TIME_DELAY'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "TIME_DELAY"
+    };
+    
+        // Position | id='SERVO POSITION'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "POSITION"
+    };
+    
+        // Start angle | id='SERVO START_ANGLE'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "START_ANGLE"
+    };
+        // Stop angle | id='SERVO STOP_ANGLE'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "STOP_ANGLE"
+    };
+        // Motion | id='SERVO MOTION'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MOTION"
+    };
+        // Enable | id='SERVO ACTUATE_ON'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ACTUATE"
+    };
+        // Disable | id='SERVO ACTUATE_OFF'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ACTUATE"
+    };
+        // Pin | id='SERVO PIN'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "PIN",
+    }
+        // Min PWM | id='SERVO MIN_PWM'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MIN_PWM"
+    }
+        // Max PWM | id='SERVO MAX_PWM'
+    {
+        dev: 'SERVO',
+        req: 'GET',
+        attr: 'MAX_PWM'
+    }
+        // Max angle | id='SERVO MAX_ANGLE'
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MAX_ANGLE"
+    }
+    ///////////////////////////////
+    /*  GETTERS */// Flex Sensors
+    /****************************/
+        // Flex 2 | id='FLEX_2 PIN'
+    {
+        dev: "FLEX_2",
+        req: "GET",
+        attr: "PIN"
+    }
+        // Flex 3 | id='FLEX_3 PIN'
+    {
+        dev: "FLEX_3",
+        req: "GET",
+        attr: "PIN"
+    }
+        // Flex 4 | id='FLEX_4 PIN'
+    {
+        dev: "FLEX_4",
+        req: "GET",
+        attr: "PIN"
+    }
+        // Flex 5 | id='FLEX_5 PIN'
+    {
+        dev: "FLEX_5",
+        req: "GET",
+        attr: "PIN"
+    }
+
+//-----------------------------------------------------------------
+//===========================   SERVER  ===========================
+
+    ////////////////////////////////////
+    /* Responses */// Setters | Servo  
+    /*********************************/
+        // Angle-step
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "ANGLE_STEP",
+            val: -1,
+            stat: "OK" // (or "ERROR")
+        };
+    
+            // Time-delay
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "TIME_DELAY",
+            val: 10,
+            stat: "OK" // (or "ERROR")
+        };
+    
+            // Position
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "POSITION",
+            val: 0,
+            stat: "OK" // (or "ERROR")
+        };
+    
+            // Start angle
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "START_ANGLE",
+            val: 0,
+            stat: "OK" // (or "ERROR")
+        };
+            // Stop angle
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "STOP_ANGLE",
+            val: 270,
+            stat: "OK" // (or "ERROR")
+        };
+            // Motion: available modes: LOOP, SWEEP, ONE_SHOT
+            /* 
+                    LOOP:  One direction is controlled (from start -> stop)
+                    SWEEP: Both directions are controlled
+                    ONE_SHOT: Only traverses through controlled direction one iteration 
+            */
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "MOTION",
+            val: "LOOP",
+            stat: "OK" // (or "ERROR")
+        };
+            // Enable
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "ACTUATE",
+            val: true,
+            stat: "OK" // (or "ERROR")
+        };
+            // Disable
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "ACTUATE",
+            val: false,
+            stat: "OK" // (or "ERROR")
+        };
+            // Pin
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "PIN",
+            val: D4,
+            stat: "OK" // (or "ERROR")
+        }
+            // Min PWM
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "MIN_PWM",
+            val: 500,
+            stat: "OK" // (or "ERROR")
+        }
+            // Max PWM
+        {
+            dev: "SERVO",
+            req: "SET",
+            attr: "MIN_PWM",
+            val: 2500,
+            stat: "OK" // (or "ERROR")
+        }
+
+    //////////////////////////////////////////
+    /* Responses */// Setters | Flex Sensors  
+    /****************************************/
+        {
+            dev: "FLEX_2",
+            req: "SET",
+            attr: "PIN",
+            val: false,
+            stat: "OK" // or "ERROR"
+
+        }
+        {
+            dev: "FLEX_3",
+            req: "SET",
+            attr: "PIN",
+            val: false,
+            stat: "OK" // or "ERROR"
+            
+        }
+        {
+            dev: "FLEX_4",
+            req: "SET",
+            attr: "PIN",
+            val: A0,
+            stat: "OK" // or "ERROR"
+            
+        }
+        {
+            dev: "FLEX_5",
+            req: "SET",
+            attr: "PIN",
+            val: A0,
+            stat: "OK" // or "ERROR"
+            
+        }
+
+
+    ////////////////////////////////////
+    /* Responses */// Getters | Servo 
+    /*********************************/
+        // Angle-step
+            // Angle-step
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ANGLE_STEP",
+        val: -1
+    };
+    
+        // Time-delay
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "TIME_DELAY",
+        val: 10000
+    };
+    
+        // Position
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "POSITION",
+        val: 110
+    };
+    
+        // Start angle
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "START_ANGLE",
+        val: 0
+    };
+        // Stop angle
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "STOP_ANGLE",
+        val: 270
+    };
+        // Motion
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MOTION",
+        val: "LOOP"
+    };
+        // Enable
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ACTUATE",
+        val: true
+    };
+        // Disable
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "ACTUATE",
+        val: false
+    };
+        // Pin
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "PIN",
+        val: D4
+    }
+        // Min PWM
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MIN_PWM",
+        val: 500
+    }
+        // Max PWM
+    {
+        dev: "SERVO",
+        req: "GET",
+        attr: "MAX_PWM",
+        val: 2500
+    }
+    /////////////////////////////////////////
+    /* Responses */// Getters | Flex sensors 
+    /**************************************/
+    {
+        dev: "FLEX_2",
+        req: "GET",
+        attr: "PIN",
+        val: false
+    }
+    {
+        dev: "FLEX_3",
+        req: "GET",
+        attr: "PIN",
+        val: false
+    }
+    {
+        dev: "FLEX_4",
+        req: "GET",
+        attr: "PIN",
+        val: false
+    }
+    {
+        dev: "FLEX_5",
+        req: "GET",
+        attr: "PIN",
+        val: false
+    }
+
+     //////////////////////////////
+    /* Data stream */// Servo
+    /****************************/
+    {
+        dev: "SERVO",
+        attr: "POSITION",
+        val: 10
+    };
+
+    ////////////////////////////////////////////
+    /* Data stream *    ///////     Flex sensors
+    // ** will not send values if pin == false **
+    /******************************************/
+    {
+        dev: "FLEX",
+        attr: "READ",
+        val: {
+            2: val,
+            3: val,
+            4: val,
+            5: val
+        }
+    };
+
+
+        // Flex sensor 2 (if connected)
+    {
+        dev: "FLEX_2",
+        attr: "READ",
+        val: 392
+    }
+        // Flex sensor 3 (if connected)
+    {
+        dev: "FLEX_3",
+        attr: "READ",
+        val: 483
+    }
+        // Flex sensor 4 (if connected)
+
+    {
+        dev: "FLEX_4",
+        attr: "READ",
+        val: 3843
+    }
+        // Flex sensor 5 (if connected)
+    {
+        dev: "FLEX_5",
+        attr: "READ",
+        val: 30
+    }
+
